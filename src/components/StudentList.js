@@ -17,7 +17,9 @@ const StudentList = ({ students, fetchStudents, setEditingStudent }) => {
             <ul>
                 {students.map((student) => (
                     <li key={student._id} style={{ margin: "10px 0" }}>
-                        {student.firstname} {student.lastname} ({student.course})
+                        <div>
+                            <strong>{student.firstname} {student.lastname}</strong> | {student.course} | Year {student.year_level} | {student.section} | {student.gender}
+                        </div>
                         {/* Lab 06: Edit Button  */}
                         <button onClick={() => setEditingStudent(student)} style={{ marginLeft: "10px" }}>Edit</button>
                         {/* Lab 05: Delete Button [cite: 2] */}

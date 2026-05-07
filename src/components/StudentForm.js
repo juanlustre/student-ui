@@ -2,12 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const StudentForm = ({ fetchStudents, editingStudent, setEditingStudent }) => {
-    const [student, setStudent] = useState({ firstname: '', lastname: '', course: '' });
+    const [student, setStudent] = useState({
+        firstname: '',
+        lastname: '',
+        course: '',
+        year_level: '',
+        section: '',
+        gender: ''
+    });
 
-    // Lab 06: Fill form when editing 
     useEffect(() => {
         if (editingStudent) {
             setStudent(editingStudent);
+        } else {
+            setStudent({
+                firstname: '',
+                lastname: '',
+                course: '',
+                year_level: '',
+                section: '',
+                gender: ''
+            });
         }
     }, [editingStudent]);
 
@@ -22,7 +37,14 @@ const StudentForm = ({ fetchStudents, editingStudent, setEditingStudent }) => {
                 // Lab 05: POST Request [cite: 2]
                 await axios.post('/api/students', student);
             }
-            setStudent({ firstname: '', lastname: '', course: '' });
+            setStudent({
+                firstname: '',
+                lastname: '',
+                course: '',
+                year_level: '',
+                section: '',
+                gender: ''
+            });
             fetchStudents(); // Refresh the list
         } catch (error) {
             console.error("Error saving student:", error);
@@ -49,6 +71,25 @@ const StudentForm = ({ fetchStudents, editingStudent, setEditingStudent }) => {
                 value={student.course} 
                 onChange={(e) => setStudent({...student, course: e.target.value})} 
                 required 
+            />
+            <input
+                placeholder="Year Level"
+                type="number"
+                value={student.year_level}
+                onChange={(e) => setStudent({...student, year_level: e.target.value ? Number(e.target.value) : ''})}
+                required
+            />
+            <input
+                placeholder="Section"
+                value={student.section}
+                onChange={(e) => setStudent({...student, section: e.target.value})}
+                required
+            />
+            <input
+                placeholder="Gender"
+                value={student.gender}
+                onChange={(e) => setStudent({...student, gender: e.target.value})}
+                required
             />
             <button type="submit">{editingStudent ? 'Update' : 'Add'}</button>
             {editingStudent && <button type="button" onClick={() => setEditingStudent(null)}>Cancel</button>}
